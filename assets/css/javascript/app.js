@@ -1,44 +1,40 @@
-if (c == 0) {
 function clock() {
-    var myTimer = setInterval(myClock, 1000);
+    var mytimer = setInterval(myClock, 1000);
     var c = 60;
-  
+
     function myClock() {
-      document.getElementById("demo").innerHTML = --c;
-        clearInterval(myTimer);
-        alert("Reached zero");
-      }
-    }
-  }
- 
-  $(document).ready(function () {
-
-    function generateQuiz(questions, quizContainer, resultContainer, submitButton) {
+        document.getElementById("demo").innerHTML = --c;
+        if (c == 0) {
+            clearInterval(myTimer);
+            alert("Reached zero");
 
 
-        submitButton.onclick = function(){
-            showResults(questions, quizContainer,resultsContainer);
         }
-        
-         var myQuestions = [ 
+    }
+}
+$(document).ready(function () {
 
-         {
-            question1: "1. What is the definition of Cholecystitis?",
+
+    var myQuestions = [
+
+        {
+            question1: "What is the definition of Cholecystitis?",
 
             answers: {
-                
+
                 a: 'Liver Inflammation',
+
                 b: 'Renal Inflammation',
 
                 c: 'Pancreatic Inflammation',
 
                 d: 'Gallbladder Inflammation'
+            },
+            correctAnswer: 'd'
         },
-                correctAnswer: 'd'
-    },
 
-    {
-            question: "2. What is the definition of Nephrolithiasis?",
+        {
+            question: "What is the definition of Nephrolithiasis?",
 
             answers: {
                 a: 'Liver Ascites',
@@ -48,153 +44,167 @@ function clock() {
                 c: 'Pancreatic Cyst',
 
                 d: 'Hydronephrosis'
-               
-        },
+
+            },
             correctAnswer: 'b'
 
-    },
+        },
 
-    {
-         question: "3. What is the definition of an Aortic Aneurysm?",
+        {
+            question: "3. What is the definition of an Aortic Aneurysm?",
 
-         answers: {
+            answers: {
                 a: 'Enlaged Lymphnode',
-                 
+
                 b: 'Carotid Bulb Tumor',
 
                 c: 'Localized outpouching of the Arterial Wall of the Aorta',
 
-                d: 'Atherosclerosis of the Aorta',
-               
-        },
+                d: 'Atherosclerosis of the Aorta'
+
+            },
             correctAnswer: 'c'
-    },
+        },
 
-    {
+        {
 
-        question: "4. What is the definition of an Ovarian Cyst?",
+            question: "4. What is the definition of an Ovarian Cyst?",
 
-        answers: {
-            a: 'Endometriosis',
+            answers: {
+                a: 'Endometriosis',
 
-            b: 'Fibroid',
+                b: 'Fibroid',
 
-            c: 'Endometrial Polyp',
+                c: 'Endometrial Polyp',
 
-            d: 'Fluid filled sac witin the Ovary'
-           
-    },
-        correctAnswer: 'd'
+                d: 'Fluid filled sac witin the Ovary'
 
-},
-{
+            },
+            correctAnswer: 'd'
 
-    question: "5. What is the definition of Hashimoto's Thyroiditis?",
+        },
+        {
 
-    answers: {
-        a: 'Goiter',
+            question: "5. What is the definition of Hashimoto's Thyroiditis?",
 
-        b: 'Thyroid Nodules',
+            answers: {
+                a: 'Goiter',
 
-        c: 'Autoimmune Disorder that Attacks the Thyroid',
+                b: 'Thyroid Nodules',
 
-        d: 'xcessive Production of the Thyroid Hormone'
-       
-},
-        correctAnswer: 'c'
+                c: 'Autoimmune Disorder that Attacks the Thyroid',
 
-}
+                d: 'Excessive Production of the Thyroid Hormone'
 
-];
+            },
+            correctAnswer: 'c'
 
-         function showQuestions(question, quizContainer) {
-    
-         var output = [];
-         var answers;
+        }
 
-        for (var i=o; i<questions.length; i++);
-        answers = [];
+    ];
 
-        for(letter in questions[i].answers){
-        answers.push(
+    function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
 
-        '<label>'
-        +   '<input type="radio" name="question'+i+'" value="'+letter+'">'
-            
-        + letter + ':'
-        
-        + question[i].answers[letters]
-        
-        +'</label>'
-    );
-}
+        function showQuestions(question, quizContainer) {
+            console.log("called showQuestions");
+            var output = [];
+            var answers;
 
-output:push(
+            for (var i = 0; i < questions.length; i++){
+                console.log("questions.length", questions.length)
+                console.log("first loop")
+                 answers = [];
+                console.log(questions);
+                console.log(i)
+                 for (letter in questions[i].answers) {
+                    console.log("second loop");
+                    answers.push(
+                         '<label>'
+                         + '<input type="radio" name="question' + i + '" value="' + letter + '">'
 
-    '<div class="question">' + questions[i].question + '</div>'
-    
+                         + letter + ':'
 
-    + '<div class="answers">' + answers.join('') + '</div>'
-    
-);
+                        + question[i].answers[letter]
+
+                        + '</label>'
+                     );
+                 }
+                   
+                   var questionDiv = $("div").addClass("question").text(questions[i].question);
+                   console.log(questionDiv, questions);
+
+                    questions = (questionDiv);
+                   
+                   output.push(
+                    
+                     '<div class="question">' + questions[i].question + '</div>'
+                     + '<div class="answers">' + answers.join('') + '</div>'
+
+                 );
+
+                quizContainer.innerHTML = output.join('');
+            }
+        }
+        showQuestions(questions, quizContainer);
 
 
-    quizContainer.innerHTML = output.join('');
+        function showResults(questions, quizContainer, resultContainer) {
+
+            var answerContainer = quizContainer.querySelectorAll('.answers');
+            var userAnswer = '';
+            var numCorrect = 0;
 
 
-    showQuestions(questions, quizContainer);
+            for (var i = 0; i < questions.length; i++) {
+
+                userAnswer = (answerContainer[i].querySelector('input[name=question' + i + ' ]:checked') || {}).value;
+
+                if (userAnswer === questions[i].correctAnswer) {
+
+                    numCorrect++;
 
 
+                }
 
+            }
 
+            resultContainer.innerHTML = numCorrect + 'outof' + questions.length;
+        }
 
-function showResults(questions, quizContainer, resultContainer) {
+        submitButton.onclick = function () {
+            showResults(questions, quizContainer, resultsContainer);
 
-    var answerContainer = quizContainer.querySelectorAll('.answers');
-     
-    var userAnswer = '';
-    var numCorrect = 0;
-
-    for (var i=0; i<questions.length; i++) {
-
-        userAnswer = (answerContainer[i].querySelector('input[name=question'+i+']:checked')||{}).value;
-
-        if (userAnswer===questions[i].correctAnswer) {
-            numCorrect++;
-
-            answerContainer[i].style.color = 'orange';
         }
     
-    else{
-        answerContainer[i].style.color = 'blue';
-    }
-
-}
-
-    resultContainer.innerHTML = numCorrect + 'outof' + questions.length;
- }
-
-
-    submitButton.onclick = function() {
-        showResults(questions, quizContainer, resultsContainer);
 
     }
-    
 
-    var quizContainer = document.write.getElementById('quiz');
+    var quizContainer = $('#quiz');
+    var resultsContainer = $('#results');
+    var submitButton = $('#submit');
 
-    var resultsContainer = document.write.getElementById('results');
 
-    var submitButton = document.getElementById('submit');
-
-     
-    generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton)
-
- }
-
-}
+    generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
 
 })
+
+
+
+
+
+
+        
+// still can't get it to work--thanks for the help-timer was working- can not generate questions on page---///
+
+
+
+
+
+
+
+
+
+
 
 
 

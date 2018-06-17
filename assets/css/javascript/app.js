@@ -1,24 +1,10 @@
-function clock() {
-    var mytimer = setInterval(myClock, 1000);
-    var c = 60;
-
-    function myClock() {
-        document.getElementById("demo").innerHTML = --c;
-        if (c == 0) {
-            clearInterval(myTimer);
-            alert("Reached zero");
-
-
-        }
-    }
-}
 $(document).ready(function () {
 
 
     var myQuestions = [
 
         {
-            question1: "What is the definition of Cholecystitis?",
+            question: "What is the definition of Cholecystitis?",
 
             answers: {
 
@@ -51,7 +37,7 @@ $(document).ready(function () {
         },
 
         {
-            question: "3. What is the definition of an Aortic Aneurysm?",
+            question: " What is the definition of an Aortic Aneurysm?",
 
             answers: {
                 a: 'Enlaged Lymphnode',
@@ -68,7 +54,7 @@ $(document).ready(function () {
 
         {
 
-            question: "4. What is the definition of an Ovarian Cyst?",
+            question: " What is the definition of an Ovarian Cyst?",
 
             answers: {
                 a: 'Endometriosis',
@@ -85,67 +71,89 @@ $(document).ready(function () {
         },
         {
 
-            question: "5. What is the definition of Hashimoto's Thyroiditis?",
+            question: " What is the definition of Hashimoto's Thyroiditis?",
 
-            answers: {
-                a: 'Goiter',
-
-                b: 'Thyroid Nodules',
-
-                c: 'Autoimmune Disorder that Attacks the Thyroid',
-
-                d: 'Excessive Production of the Thyroid Hormone'
-
-            },
+            answers: [
+                {
+                    answerText: 'Goiter',
+                    answerLetter: 'a'
+                },
+                {
+                    answerText: 'Thyroid Nodules',
+                    answerLetter: 'b'
+                },
+                {
+                    answerText: 'Autoimmune Disorder that Attacks the Thyroid',
+                    answerLetter: 'c'
+                },
+                {
+                    answerText: 'Excessive Production of the Thyroid Hormone',
+                    answerLetter: 'd'
+                }
+            ],
             correctAnswer: 'c'
 
         }
 
     ];
 
+
+
     function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
 
-        function showQuestions(question, quizContainer) {
+        //function showQuestions(questions, quizContainer) {
             console.log("called showQuestions");
             var output = [];
             var answers;
 
-            for (var i = 0; i < questions.length; i++){
+            for (var i = 0; i < questions.length; i++) {
                 console.log("questions.length", questions.length)
                 console.log("first loop")
-                 answers = [];
+                answers = [];
                 console.log(questions);
                 console.log(i)
-                 for (letter in questions[i].answers) {
+
+
+                
+                for (letter in questions[i].answers) {
                     console.log("second loop");
+                    // var radioInput = $("<input type='radio'>");
+                    // radioInput.attr("value", letter.answerLetter);
+
+                    // var radioLabel = $("<label>");
+                    // radioLaberl.text(letter.answerText);
+\
+
                     answers.push(
-                         '<label>'
-                         + '<input type="radio" name="question' + i + '" value="' + letter + '">'
+                        '<label>'
+                        + '<input type="radio" name="question' + i + '" value="' + letter + '">'
 
-                         + letter + ':'
+                        + letter + ':'
 
-                        + question[i].answers[letter]
+                        + questions[i].answers[letter]
 
                         + '</label>'
-                     );
-                 }
-                   
-                   var questionDiv = $("div").addClass("question").text(questions[i].question);
-                   console.log(questionDiv, questions);
+                    );
+                }
 
-                    questions = (questionDiv);
-                   
-                   output.push(
-                    
-                     '<div class="question">' + questions[i].question + '</div>'
-                     + '<div class="answers">' + answers.join('') + '</div>'
 
-                 );
 
-                quizContainer.innerHTML = output.join('');
+
+                output.push(
+                    '<div class="question">' + questions[i].question + '</div>'
+                    + '<div class="answers">' + answers.join('') + '</div>'
+
+                );
             }
-        }
-        showQuestions(questions, quizContainer);
+
+            console.log(output);
+
+            quizContainer.textContent = output.join("");
+
+        //}
+        //showQuestions(questions, quizContainer);
+
+
 
 
         function showResults(questions, quizContainer, resultContainer) {
@@ -168,32 +176,47 @@ $(document).ready(function () {
 
             }
 
-            resultContainer.innerHTML = numCorrect + 'outof' + questions.length;
+            resultsContainer.innerHTML = numCorrect + 'outof' + questions.length;
         }
 
         submitButton.onclick = function () {
             showResults(questions, quizContainer, resultsContainer);
 
         }
-    
-
     }
 
-    var quizContainer = $('#quiz');
-    var resultsContainer = $('#results');
-    var submitButton = $('#submit');
+
+
+    var quizContainer = document.getElementById('#quiz');
+    var resultsContainer = document.getElementById('#results');
+    var submitButton = document.getElementById('#submit');
+
+
 
 
     generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
-
+    clock();
 })
 
+function clock() {
+    var mytimer = setInterval(myClock, 1000);
+    var c = 60;
+
+    function myClock() {
+        document.getElementById("demo").innerHTML = --c;
+        if (c == 0) {
+            clearInterval(myTimer);
+            alert("Reached zero");
+
+
+        }
+    }
+}
 
 
 
 
 
-        
 // still can't get it to work--thanks for the help-timer was working- can not generate questions on page---///
 
 

@@ -73,24 +73,24 @@ $(document).ready(function () {
 
             question: " What is the definition of Hashimoto's Thyroiditis?",
 
-            answers: [
-                {
-                    answerText: 'Goiter',
-                    answerLetter: 'a'
-                },
-                {
-                    answerText: 'Thyroid Nodules',
-                    answerLetter: 'b'
-                },
-                {
-                    answerText: 'Autoimmune Disorder that Attacks the Thyroid',
-                    answerLetter: 'c'
-                },
-                {
-                    answerText: 'Excessive Production of the Thyroid Hormone',
-                    answerLetter: 'd'
-                }
-            ],
+            answers: {
+
+                a: 'Goiter',
+
+
+
+                b: 'Thyroid Nodules',
+
+
+
+                c: 'Autoimmune Disorder that Attacks the Thyroid',
+
+
+
+                d: 'Excessive Production of the Thyroid Hormone',
+
+            },
+
             correctAnswer: 'c'
 
         }
@@ -102,61 +102,61 @@ $(document).ready(function () {
     function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
 
         //function showQuestions(questions, quizContainer) {
-            console.log("called showQuestions");
-            var output = [];
-            var answers;
+        console.log("called showQuestions");
+        var output = [];
+        var answers;
 
-            for (var i = 0; i < questions.length; i++) {
-                console.log("questions.length", questions.length)
-                console.log("first loop")
-                answers = [];
-                console.log(questions);
-                console.log(i)
-
-
-                
-                for (letter in questions[i].answers) {
-                    console.log("second loop");
-                    // var radioInput = $("<input type='radio'>");
-                    // radioInput.attr("value", letter.answerLetter);
-
-                    // var radioLabel = $("<label>");
-                    // radioLaberl.text(letter.answerText);
-\
-
-                    answers.push(
-                        '<label>'
-                        + '<input type="radio" name="question' + i + '" value="' + letter + '">'
-
-                        + letter + ':'
-
-                        + questions[i].answers[letter]
-
-                        + '</label>'
-                    );
-                }
+        for (var i = 0; i < questions.length; i++) {
+            console.log("questions.length", questions.length)
+            console.log("first loop")
+            answers = [];
+            console.log(questions);
+            console.log(i)
 
 
 
+            for (letter in questions[i].answers) {
+                console.log("second loop");
+                // var radioInput = $("<input type='radio'>");
+                // radioInput.attr("value", letter.answerLetter);
 
-                output.push(
-                    '<div class="question">' + questions[i].question + '</div>'
-                    + '<div class="answers">' + answers.join('') + '</div>'
+                // var radioLabel = $("<label>");
+                // radioLaberl.text(letter.answerText);
 
+
+                answers.push(
+                    '<label>'
+                    + '<input type="radio" name="question' + i + '" value="' + letter + '">'
+
+                    + letter + ':'
+
+                    + questions[i].answers[letter]
+
+                    + '</label>'
                 );
             }
 
-            console.log(output);
-
-            quizContainer.textContent = output.join("");
-
-        //}
-        //showQuestions(questions, quizContainer);
 
 
 
+            output.push(
+                '<div class="question">' + questions[i].question + '</div>'
+                + '<div class="answers">' + answers.join('') + '</div>'
 
-        function showResults(questions, quizContainer, resultContainer) {
+            );
+        }
+
+        console.log(output);
+
+        quizContainer.innerHTML = output.join("");
+
+
+        showQuestions(questions, quizContainer);
+
+
+
+
+        function showResults(questions, quizContainer, resultsContainer) {
 
             var answerContainer = quizContainer.querySelectorAll('.answers');
             var userAnswer = '';
@@ -183,13 +183,15 @@ $(document).ready(function () {
             showResults(questions, quizContainer, resultsContainer);
 
         }
+
+
+
     }
 
 
-
-    var quizContainer = document.getElementById('#quiz');
-    var resultsContainer = document.getElementById('#results');
-    var submitButton = document.getElementById('#submit');
+    var quizContainer = document.getElementById('quiz');
+    var resultsContainer = document.getElementById('results');
+    var submitButton = document.getElementById('submit');
 
 
 
@@ -211,7 +213,11 @@ function clock() {
 
         }
     }
+
+
+
 }
+
 
 
 
